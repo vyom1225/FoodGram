@@ -438,24 +438,29 @@ function ProfileScreen({ setActiveTab }: { setActiveTab: (tab: string) => void }
 
 function FeedScreen({ setActiveTab }: { setActiveTab: (tab: string) => void }) {
   return (
-    <div className="flex-1 flex flex-col px-4">
-      <div className=" space-y-4 my-4 relative">   
-          <div className="absolute left-6 top-[30px] ">
+    <div className="flex-1 flex flex-col">
+      <div className="max-w-3xl mx-auto w-full px-4">
+        <div className="space-y-4 my-6 relative">   
+          <div className="absolute left-4 top-[34px]">
             <Search className="h-5 w-5 text-gray-400" />
           </div>
           <input
             type="text"
             placeholder="Search a restaurant, member, etc."
-            className="w-full pl-12 pr-4 py-3.5 bg-gray-100 rounded-lg text-gray-600 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:bg-white transition-all"
+            className="w-full pl-12 pr-4 py-4 bg-gray-100 rounded-xl text-gray-600 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:bg-white transition-all text-lg"
           />
-      </div>
-        <div className="flex gap-2 ">
-          <Button className="rounded-full bg-teal-800 text-white">📈 Trending</Button>
-          <Button variant="outline" className="rounded-full border-teal-800 text-teal-800">
+        </div>
+
+        <div className="flex gap-3 mb-6">
+          <Button className="rounded-full bg-teal-800 text-white px-6 py-2 text-lg hover:bg-teal-900 transition-colors">
+            📈 Trending
+          </Button>
+          <Button variant="outline" className="rounded-full border-teal-800 text-teal-800 px-6 py-2 text-lg hover:bg-teal-50 transition-colors">
             👥 Friend recs
           </Button>
         </div>
-        <div className="mt-4">
+
+        <div className="space-y-8">
           {/* Adi Restra's Review */}
           <FeedItem
             type="review"
@@ -525,48 +530,46 @@ function FeedScreen({ setActiveTab }: { setActiveTab: (tab: string) => void }) {
             }}
             date="April 6"
           />
+
+          {/* Bookmark Cards */}
+          <div className="space-y-8">
+            {/* Aditya's Bookmark */}
+            <FeedItem
+              type="bookmark"
+              user={{
+                name: "Aditya",
+                avatar: "/Aditya.png?height=48&width=48",
+              }}
+              restaurant={{
+                name: "Belgian Waffle",
+                location: "Delhi",
+              }}
+              content={{
+                bookmarks: 11,
+              }}
+              date="April 7"
+            />
+
+            {/* Vyom's Bookmark */}
+            <FeedItem
+              type="bookmark"
+              user={{
+                name: "Vyom",
+                avatar: "/imageVy.png?height=48&width=48",
+              }}
+              restaurant={{
+                name: "Belgian Waffle",
+                location: "Greater Noida",
+              }}
+              content={{
+                bookmarks: 28,
+              }}
+              date="April 6"
+            />
+          </div>
         </div>
-
-        
-
-        {/* Bookmark Cards */}
-        <div className="bg-white">
-          {/* Aditya's Bookmark */}
-          <FeedItem
-            type="bookmark"
-            user={{
-              name: "Aditya",
-              avatar: "/Aditya.png?height=48&width=48",
-            }}
-            restaurant={{
-              name: "Belgian Waffle",
-              location: "Delhi",
-            }}
-            content={{
-              bookmarks: 11,
-            }}
-            date="April 7"
-          />
-
-          {/* Vyom's Bookmark */}
-          <FeedItem
-            type="bookmark"
-            user={{
-              name: "Vyom",
-              avatar: "/imageVy.png?height=48&width=48",
-            }}
-            restaurant={{
-              name: "Belgian Waffle",
-              location: "Greater Noida",
-            }}
-            content={{
-              bookmarks: 28,
-            }}
-            date="April 6"
-          />
-        </div>
-        
       </div>
+    </div>
   )
 }
 
