@@ -1,21 +1,45 @@
 "use client"
 
+<<<<<<< HEAD:app/page.tsx
 import Image from "next/image"
 import { useState } from "react"
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs"
 import { ChevronDown, ChevronRight, Info, Share, Trophy, X, Heart, MessageCircle, Send, Plus, Bookmark } from "lucide-react"
+=======
+import { useState, useEffect } from "react"
+import { useRouter } from "next/navigation"
+import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs"
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { Button } from "@/components/ui/button"
+import { ChevronDown, ChevronRight, Info, Share, Trophy, X, LogOut } from "lucide-react"
+>>>>>>> origin/main:frontend/app/page.tsx
 import { HeaderNavigation } from "@/components/Header-navigation"
 import { SearchScreen } from "@/components/search-screen"
 import { WantToTryTab } from "@/components/want-to-try-tab"
 import { FeedItem } from "@/components/feed-item"
 import { FriendRecsTab } from "@/components/friend-recs-tab"
+<<<<<<< HEAD:app/page.tsx
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
+=======
+import { useAuthStore } from "@/lib/store/useAuthStore"
+
+>>>>>>> origin/main:frontend/app/page.tsx
 export default function Home() {
   const [activeTab, setActiveTab] = useState("feed")
+  const user = useAuthStore((state) => state.user);
+  const router = useRouter();
 
+  useEffect(() => {
+    // Check if user is authenticated
+    if (!user) {
+      router.push('/login');
+    }
+  }, [user, router]);
+
+  
   return (
     <div className="flex flex-col min-h-screen bg-white">
       <HeaderNavigation activeTab={activeTab} setActiveTab={setActiveTab} />
@@ -24,8 +48,6 @@ export default function Home() {
       {activeTab === "lists" && <ListsScreen setActiveTab={setActiveTab} />}
       {activeTab === "profile" && <ProfileScreen setActiveTab={setActiveTab} />}
       {activeTab === "search" && <SearchScreen setActiveTab={setActiveTab} />}
-
-      
     </div>
   )
 }
@@ -270,14 +292,41 @@ function ListsScreen({ setActiveTab }: { setActiveTab: (tab: string) => void }) 
 }
 
 function ProfileScreen({ setActiveTab }: { setActiveTab: (tab: string) => void }) {
+  const user = useAuthStore((state) => state.user);
+  const logout = useAuthStore((state) => state.logout);
+  const router = useRouter();
+
+  const handleLogout = async () => {
+    try {
+      // Call the backend logout endpoint to clear the JWT cookie
+      await fetch('http://localhost:5000/api/logout', {
+        method: 'POST',
+        credentials: 'include', // Important: This ensures cookies are sent with the request
+      });
+
+      // Clear the user state from Zustand store
+      logout();
+      
+      // Redirect to login page
+      router.push("/login");
+    } catch (error) {
+      console.error('Logout failed:', error);
+      // Even if the backend call fails, we'll still clear the local state and redirect
+      logout();
+      router.push("/login");
+    }
+  };
+
   return (
     <div className="flex-1 flex flex-col">
       <div className="flex justify-between items-center p-4 border-b">
         <div className="w-6"></div>
-        <h1 className="text-xl font-bold">Aditya Gipt</h1>
+        <h1 className="text-xl font-bold">{user?.username}</h1>
         <div className="flex gap-2">
-          <Share className="h-6 w-6" />
-          <div className="w-6">≡</div>
+            <button onClick={handleLogout} className="text-red-600 hover:text-red-700">
+              <LogOut className="h-6 w-6" />
+            </button>
+          <div className="text-3xl px-2">≡</div>
         </div>
       </div>
 
@@ -286,7 +335,7 @@ function ProfileScreen({ setActiveTab }: { setActiveTab: (tab: string) => void }
           <AvatarFallback className="text-5xl text-gray-400">AG</AvatarFallback>
         </Avatar>
 
-        <h2 className="text-xl font-bold mt-4">@Adibhai0845R</h2>
+        <h2 className="text-xl font-bold mt-4">{user?.username}</h2>
         <p className="text-gray-500">Member since May 2025</p>
 
         <div className="grid grid-cols-2 gap-4 w-full mt-4">
