@@ -289,7 +289,7 @@ function ProfileScreen({ setActiveTab }: { setActiveTab: (tab: string) => void }
   const handleLogout = async () => {
     try {
       // Call the backend logout endpoint to clear the JWT cookie
-      await fetch('http://localhost:5000/api/logout', {
+      await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/logout`, {
         method: 'POST',
         credentials: 'include', // Important: This ensures cookies are sent with the request
       });

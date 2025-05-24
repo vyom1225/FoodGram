@@ -1,6 +1,7 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
-import { Heart, MessageCircle, Share2 } from "lucide-react"
+import { Heart, MessageCircle, Share2, Bookmark } from "lucide-react"
+import { useState } from "react"
 
 interface FeedItemProps {
   user: {
@@ -24,6 +25,19 @@ interface FeedItemProps {
 }
 
 export function FeedItem({ user, restaurant, content, date }: FeedItemProps) {
+  const [isLiked, setIsLiked] = useState(false)
+  const [isBookmarked, setIsBookmarked] = useState(false)
+  const [bookmarkCount, setBookmarkCount] = useState(content.bookmarks || 0)
+
+  const handleLike = () => {
+    setIsLiked(!isLiked)
+  }
+
+  const handleBookmark = () => {
+    setIsBookmarked(!isBookmarked)
+    setBookmarkCount(prev => isBookmarked ? prev - 1 : prev + 1)
+  }
+
   return (
     <div className="border-b pb-4">
       <div className="text-gray-500 py-2">{date}</div>
@@ -91,8 +105,8 @@ export function FeedItem({ user, restaurant, content, date }: FeedItemProps) {
           {/* Bookmarks */}
           <div className="flex justify-between items-center mt-4">
             <div className="flex gap-4">
-              <button>
-                <Heart className="h-6 w-6" />
+              <button onClick={handleLike}>
+                <Heart className={`h-6 w-6 ${isLiked ? 'fill-pink-500 text-pink-500' : ''}`} />
               </button>
               <button>
                 <MessageCircle className="h-6 w-6" />
@@ -102,16 +116,17 @@ export function FeedItem({ user, restaurant, content, date }: FeedItemProps) {
               </button>
             </div>
             <div className="flex items-center gap-2">
-              {content.bookmarks && content.bookmarks > 0 && (
+              {bookmarkCount > 0 && (
                 <span className="text-gray-500">
-                  {content.bookmarks} bookmark{content.bookmarks > 1 ? "s" : ""}
+                  {bookmarkCount} bookmark{bookmarkCount > 1 ? "s" : ""}
                 </span>
               )}
-              <Button variant="outline" className="rounded-full h-10 w-10 p-0">
-                +
-              </Button>
-              <Button variant="outline" className="rounded-full h-10 w-10 p-0">
-                🔖
+              <Button 
+                variant="outline" 
+                className={`rounded-full h-10 w-10 p-0 ${isBookmarked ? 'bg-teal-100 border-teal-500' : ''}`}
+                onClick={handleBookmark}
+              >
+                <Bookmark className={`h-5 w-5 ${isBookmarked ? 'fill-teal-500 text-teal-500' : ''}`} />
               </Button>
             </div>
           </div>
