@@ -1,32 +1,22 @@
 "use client"
 
-<<<<<<< HEAD:app/page.tsx
 import Image from "next/image"
-import { useState } from "react"
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs"
 import { ChevronDown, ChevronRight, Info, Share, Trophy, X, Heart, MessageCircle, Send, Plus, Bookmark } from "lucide-react"
-=======
 import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation"
-import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
-import { ChevronDown, ChevronRight, Info, Share, Trophy, X, LogOut } from "lucide-react"
->>>>>>> origin/main:frontend/app/page.tsx
+import { LogOut } from "lucide-react"
 import { HeaderNavigation } from "@/components/Header-navigation"
 import { SearchScreen } from "@/components/search-screen"
 import { WantToTryTab } from "@/components/want-to-try-tab"
 import { FeedItem } from "@/components/feed-item"
 import { FriendRecsTab } from "@/components/friend-recs-tab"
-<<<<<<< HEAD:app/page.tsx
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-=======
 import { useAuthStore } from "@/lib/store/useAuthStore"
 
->>>>>>> origin/main:frontend/app/page.tsx
 export default function Home() {
   const [activeTab, setActiveTab] = useState("feed")
   const user = useAuthStore((state) => state.user);
