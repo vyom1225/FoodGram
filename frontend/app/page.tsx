@@ -2,7 +2,7 @@
 
 import Image from "next/image"
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs"
-import { ChevronDown, ChevronRight, Info, Share, Trophy, X, Heart, MessageCircle, Send, Plus, Bookmark, Search, Share2 } from "lucide-react"
+import { ChevronDown, ChevronRight, Info, Share, Trophy, X, Heart, MessageCircle, Send, Plus, Bookmark, Search, Share2, ChevronLeft } from "lucide-react"
 import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
@@ -17,6 +17,7 @@ import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { useAuthStore } from "@/lib/store/useAuthStore"
 import { Footer } from "@/components/footer"
+import { Stories } from "@/components/stories"
 
 export default function Home() {
   const [activeTab, setActiveTab] = useState("feed")
@@ -458,159 +459,407 @@ function ProfileScreen({ setActiveTab }: { setActiveTab: (tab: string) => void }
 }
 
 function FeedScreen({ setActiveTab }: { setActiveTab: (tab: string) => void }) {
-  return (
-    <div className="flex-1 flex flex-col">
-      <div className="max-w-3xl mx-auto w-full px-4">
-            <div className="space-y-4 my-6 relative">   
-            <div className="absolute left-4 top-[34px]">
-                <Search className="h-5 w-5 text-gray-400" />
-            </div>
-            <input
-                type="text"
-                placeholder="Search a restaurant, member, etc."
-                className="w-full pl-12 pr-4 py-4 bg-gray-100 rounded-xl text-gray-600 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:bg-white transition-all text-lg"
-            />
-            </div>
+  const [activeFeed, setActiveFeed] = useState("friends")
+  const [selectedMood, setSelectedMood] = useState<string | null>(null)
+  const [showMoodOptions, setShowMoodOptions] = useState(false)
 
-        <div className="flex gap-3 mb-6">
-          <Button className="rounded-full bg-teal-800 text-white px-6 py-2 text-lg hover:bg-teal-900 transition-colors">
-            📈 Trending
-          </Button>
-          <Button variant="outline" className="rounded-full border-teal-800 text-teal-800 px-6 py-2 text-lg hover:bg-teal-50 transition-colors">
-            👥 Friend recs
-          </Button>
-        </div>
+  const stories = [
+    {
+      id: "1",
+      user: {
+        name: "Julie",
+        avatar: "/imageJu.png?height=48&width=48",
+      },
+      image: "/imagepa.png?height=400&width=400",
+      timestamp: "2h",
+      likes: 12
+    },
+    {
+      id: "2",
+      user: {
+        name: "Adi Restra",
+        avatar: "/imageAd.png?height=48&width=48",
+      },
+      image: "/imagemap.png?height=400&width=400",
+      timestamp: "4h",
+      likes: 8
+    },
+    {
+      id: "3",
+      user: {
+        name: "Pushkar",
+        avatar: "/imagePu.png?height=48&width=48",
+      },
+      image: "/imagedo.png?height=400&width=400",
+      timestamp: "5h",
+      likes: 15
+    },
+    {
+      id: "4",
+      user: {
+        name: "Vyom",
+        avatar: "/imageVy.png?height=48&width=48",
+      },
+      image: "/imageba.png?height=400&width=400",
+      timestamp: "6h",
+      likes: 20
+    }
+  ]
 
+  const moodOptions = [
+    { id: "fun", label: "😄 Fun", icon: "🎉" },
+    { id: "love", label: "❤️ Love", icon: "💝" },
+    { id: "adventurous", label: "🌍 Adventurous", icon: "🏃" },
+    { id: "relaxed", label: "😌 Relaxed", icon: "☕" },
+    { id: "foodie", label: "🍽️ Foodie", icon: "🍜" }
+  ]
+
+  const getSelectedMoodLabel = () => {
+    if (!selectedMood) return "🎭 Moodles"
+    const mood = moodOptions.find(m => m.id === selectedMood)
+    return mood ? mood.label : "🎭 Moodles"
+  }
+
+  const getFeedContent = () => {
+    if (activeFeed === "moodles" && selectedMood) {
+      switch (selectedMood) {
+        case "fun":
+          return (
+            <>
+              <FeedItem
+                type="review"
+                user={{
+                  name: "Julie",
+                  avatar: "/imageJu.png?height=48&width=48",
+                }}
+                restaurant={{
+                  name: "Massara",
+                  location: "Delhi",
+                  rating: 4.8,
+                }}
+                content={{
+                  visits: 2,
+                  notes: "Had an amazing time with friends! The atmosphere was so lively and fun! 🎉",
+                  images: [
+                    "/imagepa.png?height=400&width=400",
+                    "/imagedo.png?height=400&width=400",
+                  ],
+                  bookmarks: 23,
+                }}
+                date="April 7"
+              />
+            </>
+          )
+        case "love":
+          return (
+            <>
+              <FeedItem
+                type="review"
+                user={{
+                  name: "Adi Restra",
+                  avatar: "/imageAd.png?height=48&width=48",
+                }}
+                restaurant={{
+                  name: "Amantran",
+                  location: "Delhi",
+                  rating: 4.5,
+                }}
+                content={{
+                  companions: ["Aditya", "Vyom"],
+                  visits: 3,
+                  notes: "Perfect place for a romantic dinner! The candlelight and soft music created such a magical atmosphere 💕",
+                  favoriteDishes: ["Butter Chicken", "Naan"],
+                  image: "/imagemap.png?height=400&width=400",
+                  bookmarks: 15,
+                }}
+                date="April 8"
+              />
+            </>
+          )
+        case "adventurous":
+          return (
+            <>
+              <FeedItem
+                type="review"
+                user={{
+                  name: "Pushkar",
+                  avatar: "/imagePu.png?height=48&width=48",
+                }}
+                restaurant={{
+                  name: "Haldiram",
+                  location: "Delhi",
+                  rating: 4.2,
+                }}
+                content={{
+                  companions: ["Aditya"],
+                  visits: 1,
+                  notes: "Tried some unique street food combinations today! The fusion dishes were surprisingly amazing! 🌟",
+                  bookmarks: 8,
+                }}
+                date="April 6"
+              />
+            </>
+          )
+        case "relaxed":
+          return (
+            <>
+              <FeedItem
+                type="review"
+                user={{
+                  name: "fooDelhi",
+                  avatar: "/imageAd.png?height=48&width=48",
+                }}
+                restaurant={{
+                  name: "The Big Chill Cafe",
+                  location: "Kailash Colony Market",
+                  rating: 4.7,
+                }}
+                content={{
+                  visits: 5,
+                  notes: "Perfect spot for a relaxed afternoon! The cozy ambiance and great coffee made it a perfect escape from the city hustle.",
+                  favoriteDishes: ["Ravioli Al Funghi", "Eggless Pasta"],
+                  video: "/video.mp4",
+                  thumbnail: "/video-thumbnail.png",
+                  bookmarks: 42,
+                }}
+                date="April 9"
+              />
+            </>
+          )
+        case "foodie":
+          return (
+            <>
+              <FeedItem
+                type="review"
+                user={{
+                  name: "Vyom",
+                  avatar: "/imageVy.png?height=48&width=48",
+                }}
+                restaurant={{
+                  name: "Belgian Waffle",
+                  location: "Greater Noida",
+                }}
+                content={{
+                  notes: "Foodie heaven! The variety of dishes and the attention to detail in presentation is just mind-blowing! 🍽️",
+                  bookmarks: 28,
+                }}
+                date="April 6"
+              />
+            </>
+          )
+        default:
+          return null
+      }
+    }
+
+    return (
+      <>
+        {/* The Big Chill Cafe Review */}
+        <FeedItem
+          type="review"
+          user={{
+            name: "fooDelhi",
+            avatar: "/imageAd.png?height=48&width=48",
+          }}
+          restaurant={{
+            name: "The Big Chill Cafe",
+            location: "Kailash Colony Market",
+            rating: 4.7,
+          }}
+          content={{
+            visits: 5,
+            notes: "Big Chill is one of my favorites! 😍 The eggless (do ask for it specifically) Ravioli Al Funghi, where the ravioli is stuffed with mushrooms and cream cheese and tossed in a garlicky, cheesy parmesan cream cheese sauce.",
+            favoriteDishes: ["Ravioli Al Funghi", "Eggless Pasta"],
+            video: "/video.mp4",
+            thumbnail: "/video-thumbnail.png",
+            bookmarks: 42,
+          }}
+          date="April 9"
+        />
+
+        {/* Adi Restra's Review */}
+        <FeedItem
+          type="review"
+          user={{
+            name: "Adi Restra",
+            avatar: "/imageAd.png?height=48&width=48",
+          }}
+          restaurant={{
+            name: "Amantran",
+            location: "Delhi",
+            rating: 4.5,
+          }}
+          content={{
+            companions: ["Aditya", "Vyom"],
+            visits: 3,
+            notes: "Great food and ambiance!",
+            favoriteDishes: ["Butter Chicken", "Naan"],
+            image: "/imagemap.png?height=400&width=400",
+            bookmarks: 15,
+          }}
+          date="April 8"
+        />
+
+        {/* Julie's Review */}
+        <FeedItem
+          type="review"
+          user={{
+            name: "Julie",
+            avatar: "/imageJu.png?height=48&width=48",
+          }}
+          restaurant={{
+            name: "Massara",
+            location: "Delhi",
+            rating: 4.8,
+          }}
+          content={{
+            visits: 2,
+            notes: "Amazing experience!",
+            images: [
+              "/imagepa.png?height=400&width=400",
+              "/imagedo.png?height=400&width=400",
+              "/imageba.png?height=400&width=400",
+              "/chow.png?height=400&width=400",
+            ],
+            bookmarks: 23,
+          }}
+          date="April 7"
+        />
+
+        {/* Pushkar's Review */}
+        <FeedItem
+          type="review"
+          user={{
+            name: "Pushkar",
+            avatar: "/imagePu.png?height=48&width=48",
+          }}
+          restaurant={{
+            name: "Haldiram",
+            location: "Delhi",
+            rating: 4.2,
+          }}
+          content={{
+            companions: ["Aditya"],
+            visits: 1,
+            notes: "Good food!",
+            bookmarks: 8,
+          }}
+          date="April 6"
+        />
+
+        {/* Bookmark Cards */}
         <div className="space-y-8">
-          {/* The Big Chill Cafe Review */}
+          {/* Aditya's Bookmark */}
           <FeedItem
-            type="review"
+            type="bookmark"
             user={{
-              name: "fooDelhi",
-              avatar: "/imageAd.png?height=48&width=48",
+              name: "Aditya",
+              avatar: "/Aditya.png?height=48&width=48",
             }}
             restaurant={{
-              name: "The Big Chill Cafe",
-              location: "Kailash Colony Market",
-              rating: 4.7,
-            }}
-            content={{
-              visits: 5,
-              notes: "Big Chill is one of my favorites! 😍 The eggless (do ask for it specifically) Ravioli Al Funghi, where the ravioli is stuffed with mushrooms and cream cheese and tossed in a garlicky, cheesy parmesan cream cheese sauce.",
-              favoriteDishes: ["Ravioli Al Funghi", "Eggless Pasta"],
-              video: "/video.mp4",
-              thumbnail: "/video-thumbnail.png",
-              bookmarks: 42,
-            }}
-            date="April 9"
-          />
-
-          {/* Adi Restra's Review */}
-          <FeedItem
-            type="review"
-            user={{
-              name: "Adi Restra",
-              avatar: "/imageAd.png?height=48&width=48",
-            }}
-            restaurant={{
-              name: "Amantran",
+              name: "Belgian Waffle",
               location: "Delhi",
-              rating: 4.5,
             }}
             content={{
-              companions: ["Aditya", "Vyom"],
-              visits: 3,
-              notes: "Great food and ambiance!",
-              favoriteDishes: ["Butter Chicken", "Naan"],
-              image: "/imagemap.png?height=400&width=400",
-              bookmarks: 15,
-            }}
-            date="April 8"
-          />
-
-          {/* Julie's Review */}
-          <FeedItem
-            type="review"
-            user={{
-              name: "Julie",
-              avatar: "/imageJu.png?height=48&width=48",
-            }}
-            restaurant={{
-              name: "Massara",
-              location: "Delhi",
-              rating: 4.8,
-            }}
-            content={{
-              visits: 2,
-              notes: "Amazing experience!",
-              images: [
-                "/imagepa.png?height=400&width=400",
-                "/imagedo.png?height=400&width=400",
-                "/imageba.png?height=400&width=400",
-                "/chow.png?height=400&width=400",
-              ],
-              bookmarks: 23,
+              bookmarks: 11,
             }}
             date="April 7"
           />
 
-          {/* Pushkar's Review */}
+          {/* Vyom's Bookmark */}
           <FeedItem
-            type="review"
+            type="bookmark"
             user={{
-              name: "Pushkar",
-              avatar: "/imagePu.png?height=48&width=48",
+              name: "Vyom",
+              avatar: "/imageVy.png?height=48&width=48",
             }}
             restaurant={{
-              name: "Haldiram",
-              location: "Delhi",
-              rating: 4.2,
+              name: "Belgian Waffle",
+              location: "Greater Noida",
             }}
             content={{
-              companions: ["Aditya"],
-              visits: 1,
-              notes: "Good food!",
-              bookmarks: 8,
+              bookmarks: 28,
             }}
             date="April 6"
           />
+        </div>
+      </>
+    )
+  }
 
-          {/* Bookmark Cards */}
-          <div className="space-y-8">
-            {/* Aditya's Bookmark */}
-            <FeedItem
-              type="bookmark"
-              user={{
-                name: "Aditya",
-                avatar: "/Aditya.png?height=48&width=48",
-              }}
-              restaurant={{
-                name: "Belgian Waffle",
-                location: "Delhi",
-              }}
-              content={{
-                bookmarks: 11,
-              }}
-              date="April 7"
-            />
-
-            {/* Vyom's Bookmark */}
-            <FeedItem
-              type="bookmark"
-              user={{
-                name: "Vyom",
-                avatar: "/imageVy.png?height=48&width=48",
-              }}
-              restaurant={{
-                name: "Belgian Waffle",
-                location: "Greater Noida",
-              }}
-              content={{
-                bookmarks: 28,
-              }}
-              date="April 6"
-            />
+  return (
+    <div className="flex-1 flex flex-col">
+      <div className="max-w-3xl mx-auto w-full px-4">
+        <div className="space-y-4 my-6 relative">   
+          <div className="absolute left-4 top-[34px]">
+            <Search className="h-5 w-5 text-gray-400" />
           </div>
+          <input
+            type="text"
+            placeholder="Search a restaurant, member, etc."
+            className="w-full pl-12 pr-4 py-4 bg-gray-100 rounded-xl text-gray-600 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:bg-white transition-all text-lg"
+          />
+        </div>
+
+        {activeFeed === "friends" && <Stories stories={stories} />}
+
+        <div className="flex gap-3 mb-6">
+          <Button 
+            variant="outline" 
+            className={`rounded-full border-teal-800 text-teal-800 px-6 py-2 text-lg hover:bg-teal-50 transition-colors ${activeFeed === "friends" ? "bg-teal-50" : ""}`}
+            onClick={() => {
+              setActiveFeed("friends")
+              setSelectedMood(null)
+              setShowMoodOptions(false)
+            }}
+          >
+            👥 Friends
+          </Button>
+          <Button 
+            variant="outline"
+            className={`rounded-full ${activeFeed === "trending" ? "bg-teal-800 text-white border-teal-800" : "bg-white border-teal-800 text-teal-800"} px-6 py-2 text-lg hover:bg-teal-50 transition-colors`}
+            onClick={() => {
+              setActiveFeed("trending")
+              setSelectedMood(null)
+              setShowMoodOptions(false)
+            }}
+          >
+            📈 Trending
+          </Button>
+          <div className="relative">
+            <Button 
+              variant="outline" 
+              className={`rounded-full border-teal-800 text-teal-800 px-6 py-2 text-lg hover:bg-teal-50 transition-colors ${activeFeed === "moodles" ? "bg-teal-50" : ""}`}
+              onClick={() => {
+                setActiveFeed("moodles")
+                setShowMoodOptions(!showMoodOptions)
+              }}
+            >
+              {getSelectedMoodLabel()}
+              <ChevronDown className={`ml-2 h-4 w-4 transition-transform ${showMoodOptions ? 'rotate-180' : ''}`} />
+            </Button>
+            {showMoodOptions && (
+              <div className="absolute top-full left-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-gray-100 py-2 z-10">
+                {moodOptions.map((mood) => (
+                  <button
+                    key={mood.id}
+                    className="w-full px-4 py-2 text-left hover:bg-teal-50 flex items-center gap-2"
+                    onClick={() => {
+                      setSelectedMood(mood.id)
+                      setShowMoodOptions(false)
+                    }}
+                  >
+                    <span className="text-xl">{mood.icon}</span>
+                    <span>{mood.label}</span>
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
+        </div>
+
+        <div className="space-y-8">
+          {getFeedContent()}
         </div>
       </div>
     </div>
