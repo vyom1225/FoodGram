@@ -26,19 +26,13 @@ interface FeedItemProps {
 export function FeedItem({ user, restaurant, content, date }: FeedItemProps) {
   return (
     <div className="border-b pb-4">
-      {/* Date Header */}
       <div className="text-gray-500 py-2">{date}</div>
-
       <div className="flex gap-3">
-        {/* User Avatar */}
         <Avatar className="h-14 w-14">
           <AvatarImage src={user.avatar || "/placeholder.svg"} alt={user.name} />
           <AvatarFallback>{user.name.charAt(0)}</AvatarFallback>
         </Avatar>
-
-        {/* Content */}
         <div className="flex-1">
-          {/* Header with Rating */}
           <div className="flex justify-between items-start">
             <div>
               <h3 className="font-bold text-xl">
@@ -66,7 +60,6 @@ export function FeedItem({ user, restaurant, content, date }: FeedItemProps) {
             </div>
           </div>
 
-          {/* Image */}
           {content.image && (
             <div className="mt-3 rounded-lg overflow-hidden relative">
               <img
@@ -80,7 +73,6 @@ export function FeedItem({ user, restaurant, content, date }: FeedItemProps) {
             </div>
           )}
 
-          {/* Notes */}
           {content.notes && (
             <div className="mt-4">
               <h5 className="font-bold text-lg">Notes:</h5>

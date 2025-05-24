@@ -11,13 +11,11 @@ export function SearchScreen({ setActiveTab }: SearchScreenProps) {
     <div className="flex-1 flex flex-col">
       {/* Header */}
       <div className="flex justify-between items-center p-4">
-        <h1 className="text-3xl font-bold text-teal-800">beli</h1>
+        <h1 className="text-3xl font-bold text-teal-800">FoodGram</h1>
         <button className="h-8 w-8 rounded-full bg-gray-200 flex items-center justify-center">
           <X className="h-5 w-5 text-gray-500" />
         </button>
       </div>
-
-      {/* Tabs */}
       <Tabs defaultValue="restaurants" className="w-full">
         <TabsList className="grid grid-cols-2 w-full px-4">
           <TabsTrigger
@@ -35,7 +33,6 @@ export function SearchScreen({ setActiveTab }: SearchScreenProps) {
         </TabsList>
 
         <div className="px-4 pt-6 space-y-4">
-          {/* Search Bar */}
           <div className="relative">
             <div className="absolute left-3 top-1/2 transform -translate-y-1/2">
               <div className="h-5 w-5 text-gray-400">🔍</div>
@@ -47,7 +44,6 @@ export function SearchScreen({ setActiveTab }: SearchScreenProps) {
             />
           </div>
 
-          {/* Location */}
           <div className="relative">
             <div className="absolute left-3 top-1/2 transform -translate-y-1/2">
               <MapPin className="h-5 w-5 text-gray-500" />
@@ -65,8 +61,6 @@ export function SearchScreen({ setActiveTab }: SearchScreenProps) {
               👥 Friend recs
             </Button>
           </div>
-
-          {/* Results */}
           <div>
             <h3 className="text-xl font-bold text-gray-800 mb-4">Places you may have been in Delhi</h3>
 
