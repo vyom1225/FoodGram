@@ -16,6 +16,7 @@ import { FriendRecsTab } from "@/components/friend-recs-tab"
 import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { useAuthStore } from "@/lib/store/useAuthStore"
+import { Footer } from "@/components/footer"
 
 export default function Home() {
   const [activeTab, setActiveTab] = useState("feed")
@@ -472,7 +473,7 @@ function FeedScreen({ setActiveTab }: { setActiveTab: (tab: string) => void }) {
               visits: 3,
               notes: "Great food and ambiance!",
               favoriteDishes: ["Butter Chicken", "Naan"],
-              image: "/imagepa.png?height=400&width=400",
+              image: "/imagemap.png?height=400&width=400",
               bookmarks: 15,
             }}
             date="April 8"
@@ -564,49 +565,7 @@ function FeedScreen({ setActiveTab }: { setActiveTab: (tab: string) => void }) {
             date="April 6"
           />
         </div>
-        <div className="border rounded-lg p-4">
-          <h3 className="text-xl font-bold text-teal-800 mb-2">You have 6 invites left!</h3>
-          <p className="text-gray-500 mb-4">Unlock features as friends join (0/5)</p>
-
-          <div className="grid grid-cols-5 gap-4 mb-4">
-            <div className="flex flex-col items-center">
-              <div className="h-12 w-12 bg-gray-100 rounded-lg flex items-center justify-center mb-2">📊</div>
-              <span className="text-xs text-center">Average Scores</span>
-            </div>
-            <div className="flex flex-col items-center">
-              <div className="h-12 w-12 bg-gray-100 rounded-lg flex items-center justify-center mb-2">🍽️</div>
-              <span className="text-xs text-center">Dish Search</span>
-            </div>
-            <div className="flex flex-col items-center">
-              <div className="h-12 w-12 bg-gray-100 rounded-lg flex items-center justify-center mb-2">📋</div>
-              <span className="text-xs text-center">Res sharing</span>
-            </div>
-            <div className="flex flex-col items-center">
-              <div className="h-12 w-12 bg-gray-100 rounded-lg flex items-center justify-center mb-2">🥷</div>
-              <span className="text-xs text-center">Stealth Mode</span>
-            </div>
-            <div className="flex flex-col items-center">
-              <div className="h-12 w-12 bg-gray-100 rounded-lg flex items-center justify-center mb-2">👥</div>
-              <span className="text-xs text-center">Social Links</span>
-            </div>
-          </div>
-          <Button className="w-full bg-teal-800 text-white rounded-lg">Invite friends</Button>
-        </div>
-
-        <div className="bg-gradient-to-r from-teal-800 to-teal-600 rounded-lg p-4 text-white relative overflow-hidden my-4 mx-4">
-          <div className="relative z-10">
-            <h3 className="text-xl font-bold mb-1">FoodGram x The Way</h3>
-            <p className="text-sm mb-1">Beli Supper Club Exclusive Event</p>
-            <p className="text-sm">June 3. Click here to book a spot</p>
-          </div>
-          <div className="absolute right-4 top-4">
-            <div className="text-2xl">×</div>
-          </div>
-          <div className="absolute right-4 bottom-4 text-right">
-            <div className="text-lg font-serif italic">The Way</div>
-            <div className="text-sm font-bold">FoodGRam</div>
-          </div>
-        </div>
+        
       </div>
   )
 }
