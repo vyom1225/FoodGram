@@ -5,7 +5,7 @@ import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
 import { ChevronDown, ChevronRight, Info, Share, Trophy, X } from "lucide-react"
-import { BottomNavigation } from "@/components/bottom-navigation"
+import { HeaderNavigation } from "@/components/Header-navigation"
 import { SearchScreen } from "@/components/search-screen"
 import { WantToTryTab } from "@/components/want-to-try-tab"
 import { FeedItem } from "@/components/feed-item"
@@ -16,23 +16,14 @@ export default function Home() {
 
   return (
     <div className="flex flex-col min-h-screen bg-white">
-      {/* Status Bar */}
-      <div className="flex justify-between items-center p-2 text-sm text-gray-700">
-        <div>00:25 📷</div>
-        <div className="flex items-center gap-1">
-          <span>📶</span>
-          <span>LTE</span>
-          <span>29%🔋</span>
-        </div>
-      </div>
-
+      <HeaderNavigation activeTab={activeTab} setActiveTab={setActiveTab} />
       {activeTab === "feed" && <FeedScreen setActiveTab={setActiveTab} />}
       {activeTab === "leaderboard" && <LeaderboardScreen setActiveTab={setActiveTab} />}
       {activeTab === "lists" && <ListsScreen setActiveTab={setActiveTab} />}
       {activeTab === "profile" && <ProfileScreen setActiveTab={setActiveTab} />}
       {activeTab === "search" && <SearchScreen setActiveTab={setActiveTab} />}
 
-      <BottomNavigation activeTab={activeTab} setActiveTab={setActiveTab} />
+      
     </div>
   )
 }
@@ -405,17 +396,8 @@ function ProfileScreen({ setActiveTab }: { setActiveTab: (tab: string) => void }
 function FeedScreen({ setActiveTab }: { setActiveTab: (tab: string) => void }) {
   return (
     <div className="flex-1 flex flex-col">
-      {/* Header */}
-      <div className="flex justify-between items-center p-4">
-        <h1 className="text-3xl font-bold text-teal-800">beli</h1>
-        <div className="flex gap-4">
-          <div className="h-6 w-6">📅</div>
-          <div className="h-6 w-6">🔔</div>
-          <div className="h-6 w-6">≡</div>
-        </div>
-      </div>
 
-      <div className="px-4 space-y-4">
+      <div className="px-4 space-y-4 my-4">
         {/* Search Bar */}
         <div className="relative">
           <div className="absolute left-3 top-1/2 transform -translate-y-1/2">
