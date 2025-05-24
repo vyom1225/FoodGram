@@ -1,18 +1,32 @@
 "use client"
 
+<<<<<<< HEAD:app/page.tsx
+import Image from "next/image"
+import { useState } from "react"
+import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs"
+import { ChevronDown, ChevronRight, Info, Share, Trophy, X, Heart, MessageCircle, Send, Plus, Bookmark } from "lucide-react"
+=======
 import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation"
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
 import { ChevronDown, ChevronRight, Info, Share, Trophy, X, LogOut } from "lucide-react"
+>>>>>>> origin/main:frontend/app/page.tsx
 import { HeaderNavigation } from "@/components/Header-navigation"
 import { SearchScreen } from "@/components/search-screen"
 import { WantToTryTab } from "@/components/want-to-try-tab"
 import { FeedItem } from "@/components/feed-item"
 import { FriendRecsTab } from "@/components/friend-recs-tab"
+<<<<<<< HEAD:app/page.tsx
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { Button } from "@/components/ui/button"
+import { Card, CardContent } from "@/components/ui/card"
+import { Badge } from "@/components/ui/badge"
+=======
 import { useAuthStore } from "@/lib/store/useAuthStore"
 
+>>>>>>> origin/main:frontend/app/page.tsx
 export default function Home() {
   const [activeTab, setActiveTab] = useState("feed")
   const user = useAuthStore((state) => state.user);
@@ -70,7 +84,7 @@ function LeaderboardScreen({ setActiveTab }: { setActiveTab: (tab: string) => vo
               All Members <ChevronDown className="h-4 w-4" />
             </Button>
             <Button variant="outline" className="rounded-full flex items-center gap-2 text-teal-800">
-              New York, NY <ChevronDown className="h-4 w-4" />
+              Delhi<ChevronDown className="h-4 w-4" />
             </Button>
           </div>
 
@@ -91,7 +105,7 @@ function LeaderboardScreen({ setActiveTab }: { setActiveTab: (tab: string) => vo
 
         <TabsContent value="influence" className="px-4 pt-4">
           <p className="text-gray-500 mb-4">
-            Number of Beli members who are here because of you (i.e., joined from your invite)
+            Number of FoodGram members who are here because of you (i.e., joined from your invite)
           </p>
 
           <div className="flex gap-2 mb-6">
@@ -344,7 +358,7 @@ function ProfileScreen({ setActiveTab }: { setActiveTab: (tab: string) => void }
           </div>
           <div className="flex flex-col items-center">
             <span className="text-xl font-bold">-</span>
-            <span className="text-gray-500">Rank on Beli</span>
+            <span className="text-gray-500">Rank on FoodGram</span>
           </div>
         </div>
 
@@ -387,7 +401,7 @@ function ProfileScreen({ setActiveTab }: { setActiveTab: (tab: string) => void }
           <div className="border rounded-lg p-4">
             <div className="flex items-center">
               <Trophy className="h-6 w-6 text-teal-700 mr-2" />
-              <span className="text-lg text-gray-500">Rank on Beli</span>
+              <span className="text-lg text-gray-500">Rank on FoodGram</span>
             </div>
             <div className="text-xl font-bold mt-2">-</div>
           </div>
@@ -423,20 +437,18 @@ function ProfileScreen({ setActiveTab }: { setActiveTab: (tab: string) => void }
             <Button variant="outline" className="rounded-full">
               Customize
             </Button>
+          <div/>
           </div>
-        </div>
-      </div>
-    </div>
+          </div>
+          </div>
+          </div>
   )
 }
 
 function FeedScreen({ setActiveTab }: { setActiveTab: (tab: string) => void }) {
   return (
     <div className="flex-1 flex flex-col">
-
-      <div className="px-4 space-y-4 my-4">
-        {/* Search Bar */}
-        <div className="relative">
+      <div className="px-4 space-y-4 my-4 relative">   
           <div className="absolute left-3 top-1/2 transform -translate-y-1/2">
             <div className="h-5 w-5 text-gray-400">🔍</div>
           </div>
@@ -446,41 +458,36 @@ function FeedScreen({ setActiveTab }: { setActiveTab: (tab: string) => void }) {
             className="w-full pl-10 pr-4 py-3 bg-gray-100 rounded-lg text-gray-600 placeholder-gray-400"
           />
         </div>
-
-        {/* Filter Buttons */}
         <div className="flex gap-2">
           <Button className="rounded-full bg-teal-800 text-white">📈 Trending</Button>
           <Button variant="outline" className="rounded-full border-teal-800 text-teal-800">
             👥 Friend recs
           </Button>
         </div>
-
-        {/* Feed Items */}
         <div className="mt-4">
           <FeedItem
             user={{
-              name: "Jordan",
-              avatar: "/placeholder.svg?height=60&width=60",
+              name: "Adi Restra",
+              avatar: "/image.png?height=60&width=60",
             }}
             restaurant={{
-              name: "Morgenstern's Finest Ice Cream",
-              location: "South Village, Manhattan",
+              name: "Amantran",
+              location: "CP,Delhi",
               rating: 10.0,
             }}
             content={{
               companions: ["Lawrence Sanz", "Lewis MacMillan"],
               visits: 1,
               notes:
-                "Super yummy I've cream (and had dairy free!!!) — it wasn't just another fruit sorbet like I'm used to having to have...very happy :)",
-              favoriteDishes: ["Cow tracks"],
-              image: "/placeholder.svg?height=300&width=400",
+                "very happy :)",
+              favoriteDishes: ["Pizza"],
+              image: "/imagemap.png?height=300&width=400",
               bookmarks: 1,
             }}
             date="Wednesday"
           />
         </div>
 
-        {/* Invites Section */}
         <div className="border rounded-lg p-4">
           <h3 className="text-xl font-bold text-teal-800 mb-2">You have 6 invites left!</h3>
           <p className="text-gray-500 mb-4">Unlock features as friends join (0/5)</p>
@@ -507,14 +514,11 @@ function FeedScreen({ setActiveTab }: { setActiveTab: (tab: string) => void }) {
               <span className="text-xs text-center">Social Links</span>
             </div>
           </div>
-
           <Button className="w-full bg-teal-800 text-white rounded-lg">Invite friends</Button>
         </div>
-
-        {/* Promotional Banner */}
         <div className="bg-gradient-to-r from-teal-800 to-teal-600 rounded-lg p-4 text-white relative overflow-hidden">
           <div className="relative z-10">
-            <h3 className="text-xl font-bold mb-1">Beli x The Noortwyck</h3>
+            <h3 className="text-xl font-bold mb-1">FoodGram x The Way</h3>
             <p className="text-sm mb-1">Beli Supper Club Exclusive Event</p>
             <p className="text-sm">June 3. Click here to book a spot</p>
           </div>
@@ -522,41 +526,423 @@ function FeedScreen({ setActiveTab }: { setActiveTab: (tab: string) => void }) {
             <div className="text-2xl">×</div>
           </div>
           <div className="absolute right-4 bottom-4 text-right">
-            <div className="text-lg font-serif italic">The Noortwyck</div>
-            <div className="text-sm font-bold">beli</div>
+            <div className="text-lg font-serif italic">The Way</div>
+            <div className="text-sm font-bold">FoodGRam</div>
           </div>
         </div>
+        <div>
+           <div className=" bg-white ">
+      <div className="p-4 border-b border-gray-100">
+        <div className="text-xs text-gray-400 mb-3 font-medium">Yesterday</div>
 
-        {/* Featured Lists */}
-        <div className="flex justify-between items-center">
-          <h3 className="text-xl font-bold">FEATURED LISTS</h3>
-          <span className="text-teal-800 font-medium">See all</span>
-        </div>
-
-        <div className="flex gap-4 overflow-x-auto pb-4">
-          <div className="relative min-w-[200px] h-48 rounded-lg overflow-hidden">
-            <img
-              src="/placeholder.svg?height=200&width=200"
-              alt="Mexican food"
+        <div className="flex items-start gap-3 mb-4">
+          <div className="w-10 h-10 rounded-full overflow-hidden flex-shrink-0">
+            <Image
+              src="/placeholder.svg?height=40&width=40"
+              alt="Judy's profile"
+              width={40}
+              height={40}
               className="w-full h-full object-cover"
             />
-            <div className="absolute inset-0 bg-black bg-opacity-40 flex flex-col justify-end p-4">
-              <h4 className="text-white font-bold text-lg">Top 20 NYC Mexican</h4>
-              <p className="text-white text-sm">{"You've been to 0 of 20"}</p>
-            </div>
           </div>
-
-          <div className="relative min-w-[200px] h-48 rounded-lg overflow-hidden">
-            <img src="/placeholder.svg?height=200&width=200" alt="Burger" className="w-full h-full object-cover" />
-            <div className="absolute inset-0 bg-black bg-opacity-40 flex flex-col justify-end p-4">
-              <h4 className="text-white font-bold text-lg">Top 20 NYC Reservations on Beli</h4>
-              <p className="text-white text-sm">{"You've been to 0 of 20"}</p>
+          <div className="flex-1 min-w-0">
+            <div className="text-sm text-gray-900">
+              <span className="font-semibold">Judy</span> bookmarked <span className="font-semibold">Sunn's</span>
             </div>
+            <div className="text-xs text-gray-500 mt-0.5">11 • Delhi</div>
+          </div>
+        </div>
+
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-4">
+            <span className="text-xs text-gray-500">7 likes</span>
+            <span className="text-xs text-gray-500">24 bookmarks</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <Button variant="ghost" size="sm" className="h-8 w-8 p-0 hover:bg-gray-100">
+              <Heart className="h-4 w-4 text-gray-600" />
+            </Button>
+            <Button variant="ghost" size="sm" className="h-8 w-8 p-0 hover:bg-gray-100">
+              <MessageCircle className="h-4 w-4 text-gray-600" />
+            </Button>
+            <Button variant="ghost" size="sm" className="h-8 w-8 p-0 hover:bg-gray-100">
+              <Send className="h-4 w-4 text-gray-600" />
+            </Button>
+            <Button variant="ghost" size="sm" className="h-8 w-8 p-0 hover:bg-gray-100">
+              <Plus className="h-4 w-4 text-gray-600" />
+            </Button>
+            <Button variant="ghost" size="sm" className="h-8 w-8 p-0 hover:bg-gray-100">
+              <Bookmark className="h-4 w-4 text-gray-600" />
+            </Button>
           </div>
         </div>
       </div>
+      <div className="p-4">
+        <div className="text-xs text-gray-400 mb-3 font-medium">Thursday</div>
+        <div className="flex items-start gap-3 mb-4">
+          <div className="w-10 h-10 rounded-full overflow-hidden flex-shrink-0">
+            <Image
+              src="/imagewo.png?height=40&width=40"
+              alt="Judy's profile"
+              width={40}
+              height={40}
+              className="w-full h-full object-cover"
+            />
+          </div>
+          <div className="flex-1 min-w-0">
+            <div className="flex items-center justify-between">
+              <div>
+                <div className="text-sm text-gray-900">
+                  <span className="font-semibold">Julie </span>ranked <span className="font-semibold">Massara</span>
+                </div>
+                <div className="text-xs text-gray-500 mt-0.5">11 •Delhi</div>
+                <div className="text-xs text-gray-500 mt-1 flex items-center gap-1">
+                  <span>⭐</span>
+                  <span>16 visits</span>
+                </div>
+              </div>
+              <div className="bg-green-500 text-white text-sm font-bold px-2 py-1 rounded-md">9.9</div>
+            </div>
+          </div>
+        </div>
+        <div className="grid grid-cols-3 gap-1 mb-4">
+          <div className="aspect-square rounded-lg">
+            <Image
+              src="/imagepa.png?height=120&width=120"
+              alt="Pasta dish"
+              width={120}
+              height={120}
+              className="object-cover w-full h-full"
+            />
+          </div>
+          <div className="aspect-square rounded-lg overflow-hidden">
+            <Image
+              src="/imagedo.png?height=120&width=120"
+              alt="Sliced steak"
+              width={120}
+              height={120}
+              className="w-full h-full object-cover"
+            />
+          </div>
+          <div className="aspect-square rounded-lg overflow-hidden">
+            <Image
+              src="/imageba.png?height=120&width=120"
+              alt="Another dish"
+              width={120}
+              height={120}
+              className="w-full h-full object-cover"
+            />
+          </div>
+        </div>
+
+        <div className="mb-4">
+          <div className="text-sm font-semibold text-gray-900 mb-1">Notes:</div>
+          <div className="text-sm text-gray-700 leading-relaxed">
+            As good as ever! This has become our most favorite restaurant in the last 12 months...{" "}
+            <button className="text-blue-500 font-medium">See more</button>
+          </div>
+        </div>
+        <div className="flex items-center justify-between text-xs text-gray-500">
+          <div className="flex items-center gap-4">
+            <span>152 likes</span>
+            <button className="text-blue-500 font-medium">View 9 comments</button>
+          </div>
+          <span>1845 bookmarks</span>
+        </div>
+      </div>
+      </div>
+      </div>
+           <div className=" bg-white ">
+      <div className="p-4 border-b border-gray-100">
+        <div className="text-xs text-gray-400 mb-3 font-medium">Yesterday</div>
+
+        <div className="flex items-start gap-3 mb-4">
+          <div className="w-10 h-10 rounded-full overflow-hidden flex-shrink-0">
+            <Image
+              src="/placeholder.svg?height=40&width=40"
+              alt="Judy's profile"
+              width={40}
+              height={40}
+              className="w-full h-full object-cover"
+            />
+          </div>
+          <div className="flex-1 min-w-0">
+            <div className="text-sm text-gray-900">
+              <span className="font-semibold">Judy</span> bookmarked <span className="font-semibold">Sunn's</span>
+            </div>
+            <div className="text-xs text-gray-500 mt-0.5">11 • Delhi</div>
+          </div>
+        </div>
+
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-4">
+            <span className="text-xs text-gray-500">7 likes</span>
+            <span className="text-xs text-gray-500">24 bookmarks</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <Button variant="ghost" size="sm" className="h-8 w-8 p-0 hover:bg-gray-100">
+              <Heart className="h-4 w-4 text-gray-600" />
+            </Button>
+            <Button variant="ghost" size="sm" className="h-8 w-8 p-0 hover:bg-gray-100">
+              <MessageCircle className="h-4 w-4 text-gray-600" />
+            </Button>
+            <Button variant="ghost" size="sm" className="h-8 w-8 p-0 hover:bg-gray-100">
+              <Send className="h-4 w-4 text-gray-600" />
+            </Button>
+            <Button variant="ghost" size="sm" className="h-8 w-8 p-0 hover:bg-gray-100">
+              <Plus className="h-4 w-4 text-gray-600" />
+            </Button>
+            <Button variant="ghost" size="sm" className="h-8 w-8 p-0 hover:bg-gray-100">
+              <Bookmark className="h-4 w-4 text-gray-600" />
+            </Button>
+          </div>
+        </div>
+      </div>
+      <div className="p-4">
+        <div className="text-xs text-gray-400 mb-3 font-medium">Thursday</div>
+        <div className="flex items-start gap-3 mb-4">
+          <div className="w-10 h-10 rounded-full overflow-hidden flex-shrink-0">
+            <Image
+              src="/imagewo.png?height=40&width=40"
+              alt="Judy's profile"
+              width={40}
+              height={40}
+              className="w-full h-full object-cover"
+            />
+          </div>
+          <div className="flex-1 min-w-0">
+            <div className="flex items-center justify-between">
+              <div>
+                <div className="text-sm text-gray-900">
+                  <span className="font-semibold">Julie </span>ranked <span className="font-semibold">Massara</span>
+                </div>
+                <div className="text-xs text-gray-500 mt-0.5">11 •Delhi</div>
+                <div className="text-xs text-gray-500 mt-1 flex items-center gap-1">
+                  <span>⭐</span>
+                  <span>16 visits</span>
+                </div>
+              </div>
+              <div className="bg-green-500 text-white text-sm font-bold px-2 py-1 rounded-md">9.9</div>
+            </div>
+          </div>
+        </div>
+        <div className="grid grid-cols-3 gap-1 mb-4">
+          <div className="aspect-square rounded-lg">
+            <Image
+              src="/imagepa.png?height=120&width=120"
+              alt="Pasta dish"
+              width={120}
+              height={120}
+              className="object-cover w-full h-full"
+            />
+          </div>
+          <div className="aspect-square rounded-lg overflow-hidden">
+            <Image
+              src="/imagedo.png?height=120&width=120"
+              alt="Sliced steak"
+              width={120}
+              height={120}
+              className="w-full h-full object-cover"
+            />
+          </div>
+          <div className="aspect-square rounded-lg overflow-hidden">
+            <Image
+              src="/chow.png?height=120&width=120"
+              alt="Another dish"
+              width={80}
+              height={80}
+              className="w-full h-full object-cover"
+            />
+          </div>
+        </div>
+
+        <div className="mb-4">
+          <div className="text-sm font-semibold text-gray-900 mb-1">Notes:</div>
+          <div className="text-sm text-gray-700 leading-relaxed">
+            As good as ever! This has become our most favorite restaurant in the last 12 months...{" "}
+            <button className="text-blue-500 font-medium">See more</button>
+          </div>
+        </div>
+        <div className="flex items-center justify-between text-xs text-gray-500">
+          <div className="flex items-center gap-4">
+            <span>152 likes</span>
+            <button className="text-blue-500 font-medium">View 9 comments</button>
+          </div>
+          <span>1845 bookmarks</span>
+        </div>
+      </div>
+      </div>
+ <div className="bg-white min-h-screen">
+      {/* First Post - Restaurant Review */}
+      <Card className="border-0 border-b rounded-none shadow-none">
+        <CardContent className="p-4">
+          <div className="flex items-start gap-3 mb-3">
+            <Avatar className="w-12 h-12">
+              <AvatarImage src="/pushkar.png?height=48&width=48" alt="Judy" />
+              <AvatarFallback>J</AvatarFallback>
+            </Avatar>
+            <div className="flex-1">
+              <div className="flex items-start justify-between">
+                <div>
+                  <h3 className="font-semibold text-lg leading-tight">Pushkar ranked  Haldiram</h3>
+                  <p className="text-gray-600 font-medium">with Vyom</p>
+                  <div className="flex items-center gap-1 text-sm text-gray-500 mt-1">
+                    <span>1!</span>
+                    <span>•</span>
+                    <span>Noida</span>
+                  </div>
+                  <div className="flex items-center gap-1 text-sm text-gray-500">
+                    <span>👥 5 visits</span>
+                  </div>
+                </div>
+                <Badge variant="secondary" className="bg-green-100 text-green-700 font-semibold px-2 py-1">
+                  9.6
+                </Badge>
+              </div>
+            </div>
+          </div>
+
+          <div className="mb-4">
+            <p className="text-sm">
+              <span className="font-semibold">Notes:</span> Vibe is not it, and service is inconsistent, but we love
+              this place. Probably our favorite steak and chocolate cake in nyc.
+            </p>
+          </div>
+
+          <div className="flex items-center justify-between text-sm text-gray-500 mb-3">
+            <div className="flex items-center gap-4">
+              <span>78 likes</span>
+              <span>View 4 comments</span>
+            </div>
+            <span>420 bookmarks</span>
+          </div>
+
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-1">
+              <Button variant="ghost" size="sm" className="p-2 h-auto">
+                <Heart className="w-5 h-5" />
+              </Button>
+              <Button variant="ghost" size="sm" className="p-2 h-auto">
+                <MessageCircle className="w-5 h-5" />
+              </Button>
+              <Button variant="ghost" size="sm" className="p-2 h-auto">
+                <Share className="w-5 h-5" />
+              </Button>
+            </div>
+            <div className="flex items-center gap-1">
+              <Button variant="ghost" size="sm" className="p-2 h-auto">
+                <Plus className="w-5 h-5" />
+              </Button>
+              <Button variant="ghost" size="sm" className="p-2 h-auto">
+                <Bookmark className="w-5 h-5" />
+              </Button>
+            </div>
+          </div>
+
+          <div className="text-xs text-gray-400 mt-2">April 9</div>
+        </CardContent>
+      </Card>
+
+      {/* Second Post - Bookmark */}
+      <Card className="border-0 border-b rounded-none shadow-none">
+        <CardContent className="p-4">
+          <div className="flex items-start gap-3 mb-3">
+            <Avatar className="w-12 h-12">
+              <AvatarImage src="/Aditya.png?height=48&width=48" alt="Judy" />
+              <AvatarFallback>J</AvatarFallback>
+            </Avatar>
+            <div className="flex-1">
+              <h3 className="font-semibold text-lg leading-tight">Aditya  bookmarked Belgian Waffle</h3>
+              <div className="flex items-center gap-1 text-sm text-gray-500 mt-1">
+                <span>1!</span>
+                <span>•</span>
+                <span>Delhi</span>
+              </div>
+            </div>
+          </div>
+
+          <div className="flex items-center justify-between text-sm text-gray-500 mb-3">
+            <span>23 likes</span>
+            <span>11 bookmarks</span>
+          </div>
+
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-1">
+              <Button variant="ghost" size="sm" className="p-2 h-auto">
+                <Heart className="w-5 h-5" />
+              </Button>
+              <Button variant="ghost" size="sm" className="p-2 h-auto">
+                <MessageCircle className="w-5 h-5" />
+              </Button>
+              <Button variant="ghost" size="sm" className="p-2 h-auto">
+                <Share className="w-5 h-5" />
+              </Button>
+            </div>
+            <div className="flex items-center gap-1">
+              <Button variant="ghost" size="sm" className="p-2 h-auto">
+                <Plus className="w-5 h-5" />
+              </Button>
+              <Button variant="ghost" size="sm" className="p-2 h-auto">
+                <Bookmark className="w-5 h-5" />
+              </Button>
+            </div>
+          </div>
+
+          <div className="text-xs text-gray-400 mt-2">April 7</div>
+        </CardContent>
+      </Card>
+      <Card className="border-0 rounded-none shadow-none">
+        <CardContent className="p-4">
+          <div className="flex items-start gap-3 mb-3">
+            <Avatar className="w-12 h-12">
+              <AvatarImage src="/imageVy.png?height=48&width=48" alt="Judy" />
+              <AvatarFallback>J</AvatarFallback>
+            </Avatar>
+            <div className="flex-1">
+              <h3 className="font-semibold text-lg leading-tight">Vyom bookmarked Belgian Waffle</h3>
+              <div className="flex items-center gap-1 text-sm text-gray-500 mt-1">
+                <span>🏔️</span>
+                <span>•</span>
+                <span>Greater Noida</span>
+              </div>
+            </div>
+          </div>
+
+          <div className="flex items-center justify-between text-sm text-gray-500 mb-3">
+            <div className="flex items-center gap-4">
+              <span>11 likes</span>
+              <span>View 2 comments</span>
+            </div>
+            <span>28 bookmarks</span>
+          </div>
+
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-1">
+              <Button variant="ghost" size="sm" className="p-2 h-auto">
+                <Heart className="w-5 h-5" />
+              </Button>
+              <Button variant="ghost" size="sm" className="p-2 h-auto">
+                <MessageCircle className="w-5 h-5" />
+              </Button>
+              <Button variant="ghost" size="sm" className="p-2 h-auto">
+                <Share className="w-5 h-5" />
+              </Button>
+            </div>
+            <div className="flex items-center gap-1">
+              <Button variant="ghost" size="sm" className="p-2 h-auto">
+                <Plus className="w-5 h-5" />
+              </Button>
+              <Button variant="ghost" size="sm" className="p-2 h-auto">
+                <Bookmark className="w-5 h-5" />
+              </Button>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
     </div>
-  )
+        </div>
+
+        )
 }
 
 const leaderboardData = [
@@ -572,13 +958,12 @@ const leaderboardData = [
 ]
 
 const restaurants = [
-  { name: "LOS TACOS No.1", location: "Chelsea, New York, NY" },
-  { name: "Prince Street Pizza", location: "Nolita, New York, NY" },
-  { name: "Soothr", location: "Ukrainian Village, New York, NY" },
-  { name: "Thai Diner", location: "Nolita, New York, NY" },
-  { name: "L'Artusi", location: "West Village, New York, NY" },
+  { name: "TACOS", location: "HY TOWER,Greater Noida, NY" },
+  { name: "Pizza", location: "South,Delhi, NY" },
+  { name: "Haldiram", location: "North Delhi" },
+  { name: "Mcdonalds", location: "Delhi" },
+  { name: "Lapinoz", location: "Noida" },
 ]
-
 const photosLeaderboardData = [
   { username: "@thespicedtoast", photoCount: 5, avatar: "/placeholder.svg?height=40&width=40" },
   { username: "@zainhashmi", photoCount: 5, avatar: "" },
@@ -590,7 +975,6 @@ const photosLeaderboardData = [
   { username: "@kavyoli", photoCount: 2, avatar: "/placeholder.svg?height=40&width=40" },
   { username: "@anoooshka", photoCount: 2, avatar: "/placeholder.svg?height=40&width=40" },
 ]
-
 const influenceLeaderboardData = [
   { username: "@sanchiitaaa", inviteCount: 16, avatar: "" },
   { username: "@ratatouillee", inviteCount: 8, avatar: "" },
