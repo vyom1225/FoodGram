@@ -1,7 +1,7 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
 import { Heart, MessageCircle, Share2, Bookmark, Plus, X } from "lucide-react"
-import { useState } from "react"
+import { useState, useRef } from "react"
 import {
   Carousel,
   CarouselContent,
@@ -31,6 +31,8 @@ interface FeedItemProps {
     favoriteDishes?: string[]
     images?: string[]
     image?: string
+    video?: string
+    thumbnail?: string
     bookmarks?: number
   }
   date: string
@@ -42,6 +44,8 @@ export function FeedItem({ type, user, restaurant, content, date }: FeedItemProp
   const [bookmarkCount, setBookmarkCount] = useState(content.bookmarks || 0)
   const [showCarousel, setShowCarousel] = useState(false)
   const [showComments, setShowComments] = useState(false)
+  const [isPlaying, setIsPlaying] = useState(false)
+  const videoRef = useRef<HTMLVideoElement>(null)
 
   const handleLike = () => {
     setIsLiked(!isLiked)
@@ -50,6 +54,16 @@ export function FeedItem({ type, user, restaurant, content, date }: FeedItemProp
   const handleBookmark = () => {
     setIsBookmarked(!isBookmarked)
     setBookmarkCount(prev => isBookmarked ? prev - 1 : prev + 1)
+  }
+
+  const togglePlay = () => {
+    if (videoRef.current) {
+      if (isPlaying) {
+        videoRef.current.pause()
+      } else {
+        videoRef.current.play()
+      }
+    }
   }
 
   const images = content.images || (content.image ? [content.image] : [])
@@ -112,7 +126,40 @@ export function FeedItem({ type, user, restaurant, content, date }: FeedItemProp
             </div>
           </div>
 
-          {displayImages.length > 0 && (
+          {content.video ? (
+            <div className="mt-4 -mx-4">
+              <div className="relative w-full max-w-[400px] mx-auto">
+                <div className="relative w-full aspect-[9/16] group cursor-pointer">
+                  <video
+                    ref={videoRef}
+                    src={content.video}
+                    className="w-full h-full object-cover rounded-lg"
+                    controls={isPlaying}
+                    playsInline
+                    preload="metadata"
+                    poster={content.thumbnail || "/video-thumbnail.jpg"}
+                    onPlay={() => setIsPlaying(true)}
+                    onPause={() => setIsPlaying(false)}
+                  >
+                    <source src={content.video} type="video/mp4" />
+                    Your browser does not support the video tag.
+                  </video>
+                  {!isPlaying && (
+                    <div 
+                      className="absolute inset-0 flex items-center justify-center bg-black/20 rounded-lg group-hover:bg-black/30 transition-colors"
+                      onClick={togglePlay}
+                    >
+                      <div className="w-16 h-16 rounded-full bg-white/90 flex items-center justify-center group-hover:scale-110 transition-transform">
+                        <svg className="w-8 h-8 text-teal-600" viewBox="0 0 24 24" fill="currentColor">
+                          <path d="M8 5v14l11-7z" />
+                        </svg>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
+          ) : displayImages.length > 0 && (
             <div className="mt-4 -mx-4">
               {displayImages.length === 1 ? (
                 <div className="relative w-full aspect-[16/9]">
@@ -150,39 +197,47 @@ export function FeedItem({ type, user, restaurant, content, date }: FeedItemProp
             </div>
           )}
 
-          {/* Image Carousel Modal */}
-          {showCarousel && (
-            <div className="fixed inset-0 bg-black/80 z-50 flex items-center justify-center">
-              <div className="relative w-full max-w-4xl mx-4">
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  className="absolute -top-12 right-0 text-white hover:bg-white/10"
-                  onClick={() => setShowCarousel(false)}
-                >
-                  <X className="h-6 w-6" />
-                </Button>
-                <Carousel className="w-full">
-                  <CarouselContent>
-                    {images.map((image, index) => (
-                      <CarouselItem key={index}>
-                        <div className="relative aspect-[16/9]">
-                          <img
-                            src={image}
-                            alt={`${restaurant.name} - Image ${index + 1}`}
-                            className="w-full h-full object-contain rounded-lg"
-                          />
-                        </div>
-                      </CarouselItem>
-                    ))}
-                  </CarouselContent>
-                  <CarouselPrevious className="left-4" />
-                  <CarouselNext className="right-4" />
-                </Carousel>
-              </div>
+          {/* Interactive Actions */}
+          <div className="flex items-center justify-between mt-4 px-4">
+            <div className="flex gap-8">
+              <Button
+                variant="ghost"
+                size="sm"
+                className="p-2 hover:bg-gray-100"
+                onClick={handleLike}
+              >
+                <Heart className={` ${isLiked ? 'fill-pink-500 text-pink-500' : ''}`} />
+              </Button>
+              <Button 
+                variant="ghost" 
+                size="sm" 
+                className="p-2 h-auto hover:bg-gray-100"
+                onClick={() => setShowComments(true)}
+              >
+                <MessageCircle className="h-7 w-7" />
+              </Button>
+              <Button variant="ghost" size="sm" className="p-2 h-auto hover:bg-gray-100">
+                <Share2 className="h-7 w-7" />
+              </Button>
             </div>
-          )}
+            <div className="flex items-center gap-3">
+              {bookmarkCount > 0 && (
+                <span className="text-sm text-gray-500">
+                  {bookmarkCount} bookmark{bookmarkCount > 1 ? "s" : ""}
+                </span>
+              )}
+              <Button
+                variant="ghost"
+                size="sm"
+                className={`p-2 h-auto hover:bg-gray-100 ${isBookmarked ? 'text-teal-500' : ''}`}
+                onClick={handleBookmark}
+              >
+                <Bookmark className={`h-7 w-7 ${isBookmarked ? 'fill-teal-500' : ''}`} />
+              </Button>
+            </div>
+          </div>
 
+          {/* Content Details */}
           {content.notes && (
             <div className="mt-4 px-4">
               <h5 className="font-semibold text-gray-900 mb-1">Notes:</h5>
@@ -196,47 +251,41 @@ export function FeedItem({ type, user, restaurant, content, date }: FeedItemProp
               <p className="text-gray-700">{content.favoriteDishes.join(", ")}</p>
             </div>
           )}
-
-          <div className="flex items-center justify-between mt-4 px-4">
-            <div className="flex gap-4">
-              <Button
-                variant="ghost"
-                size="sm"
-                className="p-2 h-auto hover:bg-gray-100"
-                onClick={handleLike}
-              >
-                <Heart className={`h-5 w-5 ${isLiked ? 'fill-pink-500 text-pink-500' : ''}`} />
-              </Button>
-              <Button 
-                variant="ghost" 
-                size="sm" 
-                className="p-2 h-auto hover:bg-gray-100"
-                onClick={() => setShowComments(true)}
-              >
-                <MessageCircle className="h-5 w-5" />
-              </Button>
-              <Button variant="ghost" size="sm" className="p-2 h-auto hover:bg-gray-100">
-                <Share2 className="h-5 w-5" />
-              </Button>
-            </div>
-            <div className="flex items-center gap-2">
-              {bookmarkCount > 0 && (
-                <span className="text-sm text-gray-500">
-                  {bookmarkCount} bookmark{bookmarkCount > 1 ? "s" : ""}
-                </span>
-              )}
-              <Button
-                variant="ghost"
-                size="sm"
-                className={`p-2 h-auto hover:bg-gray-100 ${isBookmarked ? 'text-teal-500' : ''}`}
-                onClick={handleBookmark}
-              >
-                <Bookmark className={`h-5 w-5 ${isBookmarked ? 'fill-teal-500' : ''}`} />
-              </Button>
-            </div>
-          </div>
         </div>
       </div>
+
+      {/* Image Carousel Modal */}
+      {showCarousel && (
+        <div className="fixed inset-0 bg-black/80 z-50 flex items-center justify-center">
+          <div className="relative w-full max-w-4xl mx-4">
+            <Button
+              variant="ghost"
+              size="icon"
+              className="absolute -top-12 right-0 text-white hover:bg-white/10"
+              onClick={() => setShowCarousel(false)}
+            >
+              <X className="h-6 w-6" />
+            </Button>
+            <Carousel className="w-full">
+              <CarouselContent>
+                {images.map((image, index) => (
+                  <CarouselItem key={index}>
+                    <div className="relative aspect-[16/9]">
+                      <img
+                        src={image}
+                        alt={`${restaurant.name} - Image ${index + 1}`}
+                        className="w-full h-full object-contain rounded-lg"
+                      />
+                    </div>
+                  </CarouselItem>
+                ))}
+              </CarouselContent>
+              <CarouselPrevious className="left-4" />
+              <CarouselNext className="right-4" />
+            </Carousel>
+          </div>
+        </div>
+      )}
 
       {/* Comment Section */}
       <CommentSection
