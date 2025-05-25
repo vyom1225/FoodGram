@@ -5,7 +5,9 @@
   "main": "index.ts",
   "scripts": {
     "start": "ts-node index.ts",
-    "dev": "nodemon --exec ts-node index.ts"
+    "dev": "nodemon --exec ts-node index.ts",
+    "build": "tsc",
+    "serve": "node dist/index.js"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
