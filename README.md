@@ -72,8 +72,14 @@ NEXT_PUBLIC_API_URL=http://localhost:5000
 
 1. Start the backend server:
 ```bash
+# Development mode
 cd backend
 npm run dev
+
+# Production mode
+cd backend
+npm run build
+npm run serve
 ```
 
 2. Start the frontend development server:
