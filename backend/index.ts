@@ -44,10 +44,11 @@ const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key';
 // Cookie options
 const cookieOptions = {
   httpOnly: true,
-  secure: process.env.NODE_ENV === 'production', // Use secure cookies in production
-  sameSite: "none" as const,
+  secure: true, // Always true for cross-domain cookies
+  sameSite: 'none' as const, // Required for cross-domain cookies
   maxAge: 24 * 60 * 60 * 1000, // 24 hours
-  path : '/',
+  path: '/',
+  domain: process.env.NODE_ENV === 'production' ? process.env.COOKIE_DOMAIN : undefined
 };
 
 // Signup Route
