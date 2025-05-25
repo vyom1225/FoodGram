@@ -1,4 +1,4 @@
-# Foodgram
+# Fued
 
 A modern web application for sharing and discovering food-related content, built with Next.js and Express.
 
