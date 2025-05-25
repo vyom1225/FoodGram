@@ -39,7 +39,7 @@ The project is divided into two main parts:
 1. Clone the repository:
 ```bash
 git clone [repository-url]
-cd foodgram
+cd fude
 ```
 
 2. Install backend dependencies:
@@ -65,7 +65,7 @@ JWT_SECRET=your_jwt_secret
 
 2. Frontend (.env.local):
 ```
-NEXT_PUBLIC_API_URL=http://localhost:5000
+NEXT_PUBLIC_API_URL=http://localhost:3001
 ```
 
 ### Running the Application
@@ -90,7 +90,7 @@ npm run dev
 
 The application will be available at:
 - Frontend: http://localhost:3000
-- Backend: http://localhost:5000
+- Backend: http://localhost:3001
 
 ## Features
 
@@ -105,7 +105,7 @@ The application will be available at:
 ## Development
 
 - Frontend development server runs on port 3000
-- Backend server runs on port 5000
+- Backend server runs on port 3001
 - API endpoints are prefixed with `/api`
 - TypeScript is used for type safety
 - Tailwind CSS for styling
