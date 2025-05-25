@@ -164,6 +164,11 @@ app.get('/api/protected', authenticateToken, (req: Request, res: Response) => {
   res.json({ message: 'This is a protected route', user: req.user });
 });
 
+// Root route
+app.get('/', (req: Request, res: Response) => {
+  res.json({ message: 'Congratulations Aditya, Pushkar and Vyom' });
+});
+
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
