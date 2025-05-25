@@ -12,7 +12,7 @@ const app = express();
 
 // CORS configuration
 const corsOptions = {
-  origin: process.env.FRONTEND_URL || 'http://localhost:3000',
+  origin: process.env.FRONTEND_URL || 'https://fude-phi.vercel.app/',
   credentials: true, // Allow cookies to be sent with requests
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization']
@@ -43,8 +43,9 @@ const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key';
 const cookieOptions = {
   httpOnly: true,
   secure: process.env.NODE_ENV === 'production', // Use secure cookies in production
-  sameSite: 'strict' as const,
-  maxAge: 24 * 60 * 60 * 1000 // 24 hours
+  sameSite: "none" as const,
+  maxAge: 24 * 60 * 60 * 1000, // 24 hours
+  path : '/',
 };
 
 // Signup Route
