@@ -42,7 +42,6 @@ export default function SignupPage() {
         headers: {
           'Content-Type': 'application/json',
         },
-        credentials: 'include',
         body: JSON.stringify({
           username: formData.username,
           password: formData.password,
@@ -55,12 +54,11 @@ export default function SignupPage() {
         throw new Error(data.message || 'Signup failed');
       }
 
-      // Store user data in Zustand store
+      // Store user data and token in Zustand store
       setUser({
         id: data.user.id,
         username: data.user.username,
-      });
-
+      }, data.token);
 
       router.push('/'); 
     } catch (err) {

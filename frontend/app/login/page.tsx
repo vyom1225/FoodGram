@@ -9,6 +9,8 @@ export default function Login() {
   const router = useRouter();
   const user = useAuthStore((state) => state.user);
 
+  console.log(user);
+
   useEffect(() => {
     // If user is already authenticated, redirect to home
     if (user) {

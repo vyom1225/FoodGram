@@ -3,7 +3,6 @@ import mongoose from 'mongoose';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
-import cookieParser from 'cookie-parser';
 import cors from 'cors';
 
 dotenv.config();
@@ -12,17 +11,13 @@ const app = express();
 
 // CORS configuration
 const corsOptions = {
-
   origin: process.env.FRONTEND_URL || 'https://fude-phi.vercel.app/',
-
-  credentials: true, // Allow cookies to be sent with requests
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization']
+  allowedHeaders: ['Content-Type', 'Authorization'],
 };
 
 app.use(cors(corsOptions));
 app.use(express.json());
-app.use(cookieParser());
 
 // MongoDB Connection
 const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/foodgram';
@@ -40,16 +35,6 @@ const User = mongoose.model('User', userSchema);
 
 // JWT Secret
 const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key';
-
-// Cookie options
-const cookieOptions = {
-  httpOnly: true,
-  secure: true, // Always true for cross-domain cookies
-  sameSite: 'none' as const, // Required for cross-domain cookies
-  maxAge: 24 * 60 * 60 * 1000, // 24 hours
-  path: '/',
-  domain: process.env.NODE_ENV === 'production' ? process.env.COOKIE_DOMAIN : undefined
-};
 
 // Signup Route
 app.post('/api/signup', async (req: Request, res: Response) => {
@@ -76,14 +61,12 @@ app.post('/api/signup', async (req: Request, res: Response) => {
     // Generate JWT token
     const token = jwt.sign({ userId: user._id }, JWT_SECRET, { expiresIn: '24h' });
 
-    // Set token in cookie
-    res.cookie('token', token, cookieOptions);
-
     res.status(201).json({
-        user : {
-            id : user._id,
-            username : user.username,
-        }
+      user: {
+        id: user._id,
+        username: user.username,
+      },
+      token
     });
   } catch (error) {
     console.error('Signup error:', error);
@@ -111,30 +94,17 @@ app.post('/api/login', async (req: Request, res: Response) => {
     // Generate JWT token
     const token = jwt.sign({ userId: user._id }, JWT_SECRET, { expiresIn: '24h' });
 
-    // Set token in cookie
-    res.cookie('token', token, cookieOptions);
-
     res.json({
-        user : {
-            id : user._id,
-            username : user.username,
-        }
+      user: {
+        id: user._id,
+        username: user.username,
+      },
+      token
     });
   } catch (error) {
     console.error('Login error:', error);
     res.status(500).json({ message: 'Internal server error' });
   }
-});
-
-// Logout Route
-app.post('/api/logout', (req: Request, res: Response) => {
-  // Clear the token cookie by setting it to expire immediately
-  res.clearCookie('token', {
-    httpOnly: true,
-    secure: process.env.NODE_ENV === 'production',
-    sameSite: 'strict'
-  });
-  res.json({ message: 'Logged out successfully' });
 });
 
 // Extend Express Request type to include user
