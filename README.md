@@ -79,7 +79,7 @@ npm run dev
 2. Start the frontend development server:
 ```bash
 cd frontend
-npm dev
+npm run dev
 ```
 
 The application will be available at:
