@@ -34,24 +34,20 @@ export default function LoginPage() {
         headers: {
           'Content-Type': 'application/json',
         },
-        credentials: 'include',
         body: JSON.stringify(formData),
       });
 
       const data = await response.json();
-      console.log(data);
 
       if (!response.ok) {
         throw new Error(data.message || 'Login failed');
       }
 
-      // Store user data in Zustand store
+      // Store user data and token in Zustand store
       setUser({
         id: data.user.id,
         username: data.user.username,
-      });
-
-      
+      }, data.token);
 
       router.push('/'); // Redirect to dashboard after successful login
     } catch (err) {

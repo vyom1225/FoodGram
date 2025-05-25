@@ -24,18 +24,11 @@ import { LogOut } from "lucide-react"
 //import { Stories } from "@/components/stories"
 import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-// Mock auth store for demo purposes
-const useAuthStore = (selector: any) => {
-  const mockStore = {
-    user: { username: "demo_user" },
-    logout: () => console.log("Logout clicked"),
-  }
-  return selector(mockStore)
-}
+import { useAuthStore } from "@/lib/store/useAuthStore"
 import { motion, AnimatePresence } from "framer-motion"
 import { Star, MapPin, Users, Calendar } from "lucide-react"
 const tabs = ["feed", "leaderboard", "lists", "search", "profile"]
-const HeaderNavigation = ({ activeTab, setActiveTab }) => {
+const HeaderNavigation = ({ activeTab, setActiveTab }: { activeTab: string; setActiveTab: (tab: string) => void }) => {
   return (
     <div className="bg-gradient-to-r from-white to-gray-50 shadow-md py-3 px-6 border-b border-gray-200">
       <div className="flex items-center justify-between max-w-7xl mx-auto">
@@ -437,25 +430,11 @@ function ProfileScreen({ setActiveTab }: { setActiveTab: (tab: string) => void }
   const logout = useAuthStore((state) => state.logout)
   const router = useRouter()
 
-  const handleLogout = async () => {
-    try {
-      // Call the backend logout endpoint to clear the JWT cookie
-      await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/logout`, {
-        method: "POST",
-        credentials: "include", // Important: This ensures cookies are sent with the request
-      })
-
-      // Clear the user state from Zustand store
-      logout()
-
-      // Redirect to login page
-      router.push("/login")
-    } catch (error) {
-      console.error("Logout failed:", error)
-      // Even if the backend call fails, we'll still clear the local state and redirect
-      logout()
-      router.push("/login")
-    }
+  const handleLogout = () => {
+    // Clear the user state and token from Zustand store
+    logout()
+    // Redirect to login page
+    router.push("/login")
   }
 
   return (
