@@ -120,12 +120,18 @@ export default function LoginPage() {
           </div>
 
           <div className="text-sm text-center">
-            <Link
-              href="/signup"
-              className="font-medium text-indigo-600 hover:text-indigo-500"
-            >
-              Don't have an account? Sign up
-            </Link>
+          <Link
+            href="/signup"
+            className="font-medium text-indigo-600 hover:text-indigo-500"
+            onClick={(e) => {
+              e.preventDefault();
+              const setUser = useAuthStore.getState().setUser;
+              setUser(null);
+              window.location.href = '/signup';
+            }}
+          >
+            Don't have an account? Sign up
+          </Link>
           </div>
         </form>
       </div>
